@@ -26,6 +26,10 @@ fn get(id: u64) -> Json<Archive> {
     })
 }
 
+fn rocket() -> rocket::Rocket {
+    rocket::ignite().mount("/archives", routes![new, get])
+}
+
 fn main() {
-    rocket::ignite().mount("/archives", routes![new, get]).launch();
+    rocket().launch();
 }
