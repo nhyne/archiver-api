@@ -8,38 +8,24 @@
 mod archive;
 use archive::{Archive};
 use rocket_contrib::json::{Json, JsonValue};
-
-type ID = usize;
+use chrono::prelude::{Utc};
 
 #[post("/new", format="json", data="<target_url>")]
 fn new(target_url: String) -> JsonValue {
-    println!("{}", target_url);
+    let new_archive = Archive::new(target_url);
+    println!("would create: {:#?}", new_archive);
     json!({ "status": "ok" })
 }
 
-//#[get("/")]
-//fn read() -> Json<Archive> {
-//    Json(json!([
-//        "hero 1",
-//        "hero 2"
-//    ]))
-//}
-//
-//#[put("/<id>", format="json", data="<archive>")]
-//fn update(id: i32, hero: Json<Hero>) -> Json<Hero> {
-//    hero
-//}
-//
-//#[delete("/<id>")]
-//fn delete(id: i32) -> Json<JsonValue> {
-//    Json(json!({"status": "ok"}))
-//}
-//
-//#[get("/<name>/<age>")]
-//fn hello(name: String, age: u8) -> String {
-//    format!("Hello, {} year old named {}!", age, name)
-//}
+#[get("/<id>", format="json")]
+fn get(id: u64) -> Json<Archive> {
+    Json(Archive{
+        id: None,
+        original_link: String::from("something"),
+        archive_timestamp: Utc::now(),
+    })
+}
 
 fn main() {
-    rocket::ignite().mount("/archives", routes![new]).launch();
+    rocket::ignite().mount("/archives", routes![new, get]).launch();
 }
