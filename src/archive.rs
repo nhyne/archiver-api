@@ -5,7 +5,7 @@ use uuid::Uuid;
 #[derive(Debug)]
 #[derive(Queryable)]
 pub struct Archive {
-    pub id: Option<Uuid>,
+    pub id: Uuid,
 //    pub owner_id: i64,
     pub original_link: String,
 //    pub archive_link: String,
@@ -15,7 +15,7 @@ pub struct Archive {
 impl Archive {
     pub fn new(original_link: String) -> Archive {
         Archive{
-            id: None,
+            id: Uuid::new_v4(),
             original_link,
             archive_timestamp: Utc::now(),
         }
