@@ -20,6 +20,7 @@ mod archive;
 mod schema;
 use self::archive::{Archive};
 use rocket_contrib::json::{Json, JsonValue};
+use rocket_contrib::uuid::Uuid as RocketUUID;
 use chrono::prelude::{Utc};
 use uuid::Uuid;
 
@@ -31,7 +32,7 @@ fn new(target_url: String) -> JsonValue {
 }
 
 #[get("/<id>", format="json")]
-fn get(id: u64) -> Json<Archive> {
+fn get(id: RocketUUID) -> Json<Archive> {
     Json(Archive{
         id: Uuid::new_v4(),
         original_link: String::from("something"),
