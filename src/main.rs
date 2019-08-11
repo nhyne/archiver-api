@@ -48,6 +48,15 @@ fn new(input_archive: Json<RocketArchive>) -> JsonValue {
 
 #[get("/<id>", format="json")]
 fn get(id: RocketUUID) -> Json<Archive> {
+    use schema::archives;
+    use schema::archives::dsl::*;
+
+    // must convert rocketUUId to standard Uuid
+
+    let connection = establish_connection();
+    let random_uuid = Uuid::new_v4();
+    let selected = archives::table.filter(id.eq(random_uuid)).select((archives::id, archives::original_link)).first::<(Uuid, String)>(&connection);
+    println!("{:#?}", selected);
     Json(Archive{
         id: Uuid::new_v4(),
         original_link: String::from("something"),
