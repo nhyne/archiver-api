@@ -21,7 +21,7 @@ mod schema;
 use self::archive::{Archive, NewArchive, RocketArchive};
 use rocket_contrib::json::{Json, JsonValue};
 use rocket_contrib::uuid::Uuid as RocketUUID;
-use chrono::prelude::{Utc};
+use chrono::prelude::{Utc, DateTime};
 use uuid::Uuid;
 
 use diesel::result::Error;
@@ -46,21 +46,24 @@ fn new(input_archive: Json<RocketArchive>) -> JsonValue {
     json!({ "status": "ok" })
 }
 
-#[get("/<id>", format="json")]
-fn get(id: RocketUUID) -> Json<Archive> {
+#[get("/<query_id>", format="json")]
+fn get(query_id: RocketUUID) -> Json<Archive> {
     use schema::archives;
     use schema::archives::dsl::*;
+    use std::str::FromStr;
 
     // must convert rocketUUId to standard Uuid
+    // TODO: Handle this error properly
+    let selected_id = Uuid::from_str(&format!("{}", query_id)).unwrap();
 
     let connection = establish_connection();
-    let random_uuid = Uuid::new_v4();
-    let selected = archives::table.filter(id.eq(random_uuid)).select((archives::id, archives::original_link)).first::<(Uuid, String)>(&connection);
-    println!("{:#?}", selected);
+
+    // TODO: Handle this error properly
+    let selected = archives::table.filter(id.eq(selected_id)).select((archives::id, archives::original_link, archives::archive_timestamp)).first::<(Uuid, String, DateTime<Utc>)>(&connection).unwrap();
     Json(Archive{
-        id: Uuid::new_v4(),
-        original_link: String::from("something"),
-        archive_timestamp: Utc::now(),
+        id: selected.0,
+        original_link: selected.1,
+        archive_timestamp: selected.2,
     })
 }
 
@@ -68,6 +71,7 @@ fn rocket() -> rocket::Rocket {
     rocket::ignite().mount("/archives", routes![new, get])
 }
 
+// TODO: Use database pooling
 fn establish_connection() -> PgConnection {
     dotenv().ok();
 

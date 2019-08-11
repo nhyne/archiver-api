@@ -7,6 +7,8 @@ pub struct RocketArchive {
     pub target_url: String,
 }
 
+//pub type AllArchive = (Uuid, String, DateTime<Utc>);
+
 #[derive(Serialize, Deserialize)]
 #[derive(Debug)]
 #[derive(Queryable)]
