@@ -1,6 +1,6 @@
 table! {
     archives (id) {
-        id -> Int4,
+        id -> Uuid,
         original_link -> Varchar,
         archive_timestamp -> Timestamptz,
     }

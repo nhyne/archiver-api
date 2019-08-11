@@ -3,6 +3,7 @@ use uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
 #[derive(Debug)]
+#[derive(Queryable)]
 pub struct Archive {
     pub id: Option<Uuid>,
 //    pub owner_id: i64,
