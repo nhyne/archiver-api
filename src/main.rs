@@ -18,7 +18,7 @@ use std::env;
 
 mod archive;
 mod schema;
-use self::archive::{Archive, NewArchive};
+use self::archive::{Archive, NewArchive, RocketArchive};
 use rocket_contrib::json::{Json, JsonValue};
 use rocket_contrib::uuid::Uuid as RocketUUID;
 use chrono::prelude::{Utc};
@@ -26,16 +26,18 @@ use uuid::Uuid;
 
 use diesel::result::Error;
 
-#[post("/new", format="json", data="<target_url>")]
-fn new(target_url: String) -> JsonValue {
+#[post("/new", format="json", data="<input_archive>")]
+fn new(input_archive: Json<RocketArchive>) -> JsonValue {
     use schema::archives;
     let connection = establish_connection();
+    let target_url = &input_archive.target_url;
     let new_id = Uuid::new_v4();
     let new_archive = NewArchive{
         id: new_id,
-        original_link: &target_url,
+        original_link: target_url,
         archive_timestamp: Utc::now(),
     };
+    // TODO: Handle this result properly
     let something : Result<Archive, Error> = diesel::insert_into(archives::table)
         .values(&new_archive)
         .get_result(&connection);

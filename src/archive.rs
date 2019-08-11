@@ -3,6 +3,11 @@ use uuid::Uuid;
 use super::schema::archives;
 
 #[derive(Serialize, Deserialize)]
+pub struct RocketArchive {
+    pub target_url: String,
+}
+
+#[derive(Serialize, Deserialize)]
 #[derive(Debug)]
 #[derive(Queryable)]
 pub struct Archive {
