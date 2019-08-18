@@ -69,6 +69,15 @@ fn get(query_id: RocketUUID) -> Json<Archive> {
     })
 }
 
+fn delete(query_id: RocketUUID) -> JsonValue {
+    use schema::archives;
+    use schema::archives::dsl::*;
+
+    let connection = establish_connection();
+
+    let deleted = archives::table.filter()
+}
+
 fn rocket() -> rocket::Rocket {
     rocket::ignite().mount("/archives", routes![new, get])
 }
