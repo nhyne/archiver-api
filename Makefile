@@ -5,8 +5,8 @@ linux_build:
 		-v $(PWD)/docker/cargo-registry:/home/rust/.cargo/registry \
 		-v $(PWD)/docker/target:/home/rust/src/target \
 		ekidd/rust-musl-builder:nightly-2019-07-08 \
-		cargo build --bin archiver_api --release
+		cargo build --bin archiver-api --release
 
 image: linux_build
-	docker build -t archiver_api:latest -f LocalDockerfile .
+	docker build -t nhyne/archiver-api:latest -f LocalDockerfile .
 

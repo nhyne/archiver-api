@@ -1,5 +1,5 @@
 [package]
-name = "archiver_api"
+name = "archiver-api"
 version = "0.1.0"
 authors = ["nhyne <nhyne@nhyne.dev>"]
 edition = "2018"
