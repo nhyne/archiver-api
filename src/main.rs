@@ -45,6 +45,8 @@ fn new(input_archive: Json<RocketArchive>) -> JsonValue {
         .get_result(&connection);
 //        .expect("Error saving new archive");
 //    println!("would create: {:#?}", new_archive);
+
+    // TODO: Should return the ID of the record
     json!({ "status": "ok" })
 }
 
@@ -56,6 +58,7 @@ fn get(query_id: RocketUUID) -> Json<Archive> {
 
     // must convert rocketUUId to standard Uuid
     // TODO: Handle this error properly
+    // TODO: Find a better way to cast
     let selected_id = Uuid::from_str(&format!("{}", query_id)).unwrap();
 
     let connection = establish_connection();
