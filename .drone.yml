@@ -4,14 +4,8 @@ type: kubernetes
 name: backend
 
 steps:
-- name: chown
-  image: rustlang/rust:nightly-slim
-  commands:
-    - ls -la /drone/src
-    - whoami
-    - "chown $(whoami):$(whoami) -R /drone/src"
-
 - name: test
-  image: rustlang/rust:nightly-slim
+  image: ekidd/rust-musl-builder:nightly-2019-07-08
   commands:
-  - cargo test
+    - chown -R rust:rust .
+    - cargo test
