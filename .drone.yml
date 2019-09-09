@@ -7,5 +7,5 @@ steps:
 - name: test
   image: ekidd/rust-musl-builder:nightly-2019-07-08
   commands:
-    - chown -R rust:rust .
+    - sudo chown -R rust:rust .
     - cargo test
