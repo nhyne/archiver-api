@@ -8,7 +8,8 @@ steps:
   image: rustlang/rust:nightly-slim
   commands:
     - ls -la /drone/src
-    - "chown $(whoami):$(whoami) -R /drone/src/target/debug/build"
+    - whoami
+    - "chown $(whoami):$(whoami) -R /drone/src"
 
 - name: test
   image: rustlang/rust:nightly-slim
