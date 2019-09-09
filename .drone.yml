@@ -7,4 +7,13 @@ steps:
 - name: test
   image: rustlang/rust:nightly-slim
   commands:
+    - chown
+  args:
+    - "rust:rust"
+    - "-R"
+    - "/drone/src/target/debug/build"
+
+- name: test
+  image: rustlang/rust:nightly-slim
+  commands:
   - cargo test
