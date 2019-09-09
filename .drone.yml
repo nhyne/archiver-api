@@ -9,7 +9,8 @@ steps:
   user: root
   commands:
 #    - sudo chown -R rust:rust .
-    - apt update
+    - cp -R ./* /home
     - apt install -y pkg-config libssl-dev libpq-dev
+    - cd /home
     - cargo build
     - cargo test
