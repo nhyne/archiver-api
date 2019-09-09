@@ -12,7 +12,7 @@ steps:
 #    - sudo chown -R rust:rust .
     - apt update
     - apt install -y pkg-config libssl-dev libpq-dev
-    - cp -R ./* /home
-    - cd /home
+#    - cp -R ./* /home
+#    - cd /home
     - cargo build
     - cargo test
