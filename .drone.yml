@@ -1,0 +1,10 @@
+---
+kind: pipeline
+type: kubernetes
+name: backend
+
+steps:
+- name: test
+  image: rustlang/rust:nightly-slim
+  commands:
+  - cargo test
