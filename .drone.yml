@@ -5,7 +5,7 @@ name: backend
 
 steps:
 - name: test
-  image: ekidd/rust-musl-builder:nightly-2019-07-08
+  image: rustlang/rust:nightly-slim #ekidd/rust-musl-builder:nightly-2019-07-08
   commands:
     - sudo chown -R rust:rust .
     - sudo apt install -y pkg-config libssl-dev libpq-dev
