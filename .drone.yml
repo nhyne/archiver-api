@@ -7,6 +7,7 @@ steps:
 - name: test
   image: rustlang/rust:nightly-slim #ekidd/rust-musl-builder:nightly-2019-07-08
   user: root
+  privileged: true
   commands:
 #    - sudo chown -R rust:rust .
     - apt update
