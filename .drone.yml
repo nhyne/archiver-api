@@ -7,6 +7,7 @@ steps:
 - name: chown
   image: rustlang/rust:nightly-slim
   commands:
+    - ls -la /drone/src
     - "chown $(whoami):$(whoami) -R /drone/src/target/debug/build"
 
 - name: test
