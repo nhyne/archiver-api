@@ -7,7 +7,6 @@ steps:
 - name: test
   image: nhyne/rust-musl-builder-sccache:nightly-2019-07-08
   user: root
-#  privileged: true
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: build_cache_aws_access_key_id
@@ -17,13 +16,9 @@ steps:
       from_secret: build_cache_bucket
     RUSTC_WRAPPER: sccache
   commands:
-    - sudo apt update
-    - sudo apt install -y pkg-config libssl-dev libpq-dev
     - sudo cp -R ./* /home/rust/src
     - sudo chown -R rust:rust /home/rust/src
     - cd /home/rust/src
     - sccache --start-server
-    - sccache -s
     - cargo build
     - cargo test
-    - sccache -s
