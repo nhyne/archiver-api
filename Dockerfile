@@ -15,4 +15,4 @@ FROM alpine:3.10.1 as runner
 
 COPY --from=build /home/rust/src/target/x86_64-unknown-linux-musl/release/archiver-api /archiver-api
 
-CMD ["./archiver_api"]
+CMD ["./archiver-api"]

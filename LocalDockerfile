@@ -1,5 +1,5 @@
 FROM alpine:3.10.1 as runner
 
-ADD ./docker/target/x86_64-unknown-linux-musl/release/archiver_api /archiver_api
+ADD ./docker/target/x86_64-unknown-linux-musl/release/archiver_api /archiver-api
 
-CMD ["./archiver_api"]
+CMD ["./archiver-api"]
