@@ -22,5 +22,7 @@ steps:
     - sudo chown -R rust:rust /home/rust/src
     - cd /home/rust/src
     - sccache --start-server
+    - sccache -s
     - cargo build
     - cargo test
+    - sccache -s
