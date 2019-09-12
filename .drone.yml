@@ -5,14 +5,21 @@ name: backend
 
 steps:
 - name: test
-  image: rustlang/rust:nightly-slim #ekidd/rust-musl-builder:nightly-2019-07-08
+  image: nhyne/rust-musl-builder-sccache:nightly-2019-07-08
   user: root
-  privileged: true
+#  privileged: true
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: build_cache_aws_access_key_id
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: build_cache_aws_secret_access_key
+    SCCACHE_BUCKET:
+      from_secret: build_cache_bucket
   commands:
-#    - sudo chown -R rust:rust .
     - apt update
     - apt install -y pkg-config libssl-dev libpq-dev
-#    - cp -R ./* /home
-#    - cd /home
+    - cp -R ./* /home
+    - cd /home
+    - sccache --start-server
     - cargo build
     - cargo test
