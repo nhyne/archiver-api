@@ -16,6 +16,7 @@ steps:
       from_secret: build_cache_bucket
     RUSTC_WRAPPER: sccache
   commands:
+    # These hacks are to get around the kubernetes volume not being mounted as executable
     - sudo cp -R ./* /home/rust/src
     - sudo chown -R rust:rust /home/rust/src
     - cd /home/rust/src
