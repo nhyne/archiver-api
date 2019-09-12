@@ -24,7 +24,7 @@ steps:
     - cargo build
     - cargo test
 
-- name: docker
+- name: docker-archiver-api
   image: plugins/docker
   environment:
     AWS_ACCESS_KEY_ID:
@@ -49,7 +49,7 @@ steps:
     changeset:
       includes: [ "**/**.rs", Dockerfile ]
 
-- name: docker
+- name: docker-diesel-cli
   image: plugins/docker
   settings:
     repo: nhyne/diesel-cli
@@ -62,7 +62,7 @@ steps:
     changeset:
       includes: [ DieselDockerfile ]
 
-- name: docker
+- name: docker-sccache
   image: plugins/docker
   settings:
     repo: nhyne/rust-musl-builder-sccache
