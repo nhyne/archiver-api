@@ -18,7 +18,8 @@ steps:
   commands:
     - sudo apt update
     - sudo apt install -y pkg-config libssl-dev libpq-dev
-    - cp -R ./* /home
+    - sudo cp -R ./* /home/rust
+    - sudo chown -R rust:rust /home/rust
     - cd /home
     - sccache --start-server
     - cargo build
