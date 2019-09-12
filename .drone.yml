@@ -21,8 +21,8 @@ steps:
     - sudo chown -R rust:rust /home/rust/src
     - cd /home/rust/src
     - sccache --start-server
-    - cargo build
     - cargo test
+    - sccache -s
 
 - name: docker-archiver-api
   image: plugins/docker
@@ -33,7 +33,6 @@ steps:
       from_secret: build_cache_aws_secret_access_key
     SCCACHE_BUCKET:
       from_secret: build_cache_bucket
-    RUSTC_WRAPPER: sccache
   settings:
     repo: nhyne/archiver-api
     auto_tag: true
