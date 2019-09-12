@@ -16,8 +16,8 @@ steps:
     SCCACHE_BUCKET:
       from_secret: build_cache_bucket
   commands:
-    - apt update
-    - apt install -y pkg-config libssl-dev libpq-dev
+    - sudo apt update
+    - sudo apt install -y pkg-config libssl-dev libpq-dev
     - cp -R ./* /home
     - cd /home
     - sccache --start-server
