@@ -23,3 +23,54 @@ steps:
     - sccache --start-server
     - cargo build
     - cargo test
+
+- name: docker
+  image: plugins/docker
+  environment:
+    AWS_ACCESS_KEY_ID:
+      from_secret: build_cache_aws_access_key_id
+    AWS_SECRET_ACCESS_KEY:
+      from_secret: build_cache_aws_secret_access_key
+    SCCACHE_BUCKET:
+      from_secret: build_cache_bucket
+    RUSTC_WRAPPER: sccache
+  settings:
+    repo: nhyne/archiver-api
+    auto_tag: true
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  build_args:
+    - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - SCCACHE_BUCKET=$SCCACHE_BUCKET
+  when:
+    changeset:
+      includes: [ "**/**.rs", Dockerfile ]
+
+- name: docker
+  image: plugins/docker
+  settings:
+    repo: nhyne/diesel-cli
+    auto_tag: true
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    changeset:
+      includes: [ DieselDockerfile ]
+
+- name: docker
+  image: plugins/docker
+  settings:
+    repo: nhyne/rust-musl-builder-sccache
+    auto_tag: true
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    changeset:
+      includes: [ SccacheDockerfile ]
