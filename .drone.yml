@@ -15,6 +15,7 @@ steps:
       from_secret: build_cache_aws_secret_access_key
     SCCACHE_BUCKET:
       from_secret: build_cache_bucket
+    RUSTC_WRAPPER: sccache
   commands:
     - sudo apt update
     - sudo apt install -y pkg-config libssl-dev libpq-dev
