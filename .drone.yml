@@ -39,13 +39,6 @@ steps:
       repo: nhyne/archiver-api
       username:
         from_secret: docker_username
-      build_args:
-        AWS_ACCESS_KEY_ID:
-          from_secret: build_cache_aws_access_key_id
-        AWS_SECRET_ACCESS_KEY:
-          from_secret: build_cache_aws_secret_access_key
-        SCCACHE_BUCKET:
-          from_secret: build_cache_bucket
     when:
       event: [ tag ]
 

@@ -2,7 +2,7 @@ FROM nhyne/rust-musl-builder-sccache:nightly-2019-07-08 AS build
 
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
-ARG SCCACHE_BUCKET
+ARG SCCACHE_BUCKET=nhyne-build-cache
 ARG RUSTC_WRAPPER=sccache
 
 ADD . /home/rust/src
