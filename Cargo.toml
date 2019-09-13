@@ -1,6 +1,6 @@
 [package]
 name = "archiver-api"
-version = "0.1.1-alpha.3"
+version = "0.1.1-alpha.4"
 authors = ["nhyne <nhyne@nhyne.dev>"]
 edition = "2018"
 
