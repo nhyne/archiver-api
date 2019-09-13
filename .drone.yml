@@ -26,6 +26,9 @@ steps:
       RUSTC_WRAPPER: sccache
       SCCACHE_BUCKET:
         from_secret: build_cache_bucket
+    when:
+      changeset:
+        includes: [ src/* ]
 
   - name: docker-archiver-api
     image: plugins/docker
