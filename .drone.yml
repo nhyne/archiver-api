@@ -40,9 +40,9 @@ steps:
       username:
         from_secret: docker_username
       build_args:
-        - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-        - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-        - SCCACHE_BUCKET=$SCCACHE_BUCKET
+        - AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
+        - AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
+        - SCCACHE_BUCKET="$SCCACHE_BUCKET"
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: build_cache_aws_access_key_id
