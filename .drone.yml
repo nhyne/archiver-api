@@ -53,6 +53,12 @@ steps:
       repo: nhyne/diesel-cli
       username:
         from_secret: docker_username
+    when:
+      trigger:
+        event:
+          - tag
+      changeset:
+        includes: [ DieselDockerfile ]
 
   - name: docker-sccache
     image: plugins/docker
@@ -63,6 +69,9 @@ steps:
       repo: nhyne/rust-musl-builder-sccache
       username:
         from_secret: docker_username
+    when:
+      changeset:
+        includes: [ SccacheDockerfile ]
 
 trigger:
   event:
