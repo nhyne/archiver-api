@@ -43,9 +43,8 @@ steps:
         from_secret: build_cache_aws_secret_access_key
       SCCACHE_BUCKET:
         from_secret: build_cache_bucket
-    trigger:
-      event:
-        - tag
+    when:
+      event: [ tag ]
 
   - name: docker-diesel-cli
     image: plugins/docker
