@@ -3,73 +3,69 @@ kind: pipeline
 type: kubernetes
 name: backend
 
+platform:
+  os: linux
+  arch: amd64
+
 steps:
-- name: test
-  image: nhyne/rust-musl-builder-sccache:nightly-2019-07-08
-  user: root
-  environment:
-    AWS_ACCESS_KEY_ID:
-      from_secret: build_cache_aws_access_key_id
-    AWS_SECRET_ACCESS_KEY:
-      from_secret: build_cache_aws_secret_access_key
-    SCCACHE_BUCKET:
-      from_secret: build_cache_bucket
-    RUSTC_WRAPPER: sccache
-  commands:
-    # These hacks are to get around the kubernetes volume not being mounted as executable
-    - sudo cp -R ./* /home/rust/src
-    - sudo chown -R rust:rust /home/rust/src
-    - cd /home/rust/src
-    - sccache --start-server
-    - cargo test
-    - sccache -s
+  - name: test
+    image: nhyne/rust-musl-builder-sccache:nightly-2019-07-08
+    user: root
+    commands:
+      - sudo cp -R ./* /home/rust/src
+      - sudo chown -R rust:rust /home/rust/src
+      - cd /home/rust/src
+      - sccache --start-server
+      - cargo test
+      - sccache -s
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: build_cache_aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: build_cache_aws_secret_access_key
+      RUSTC_WRAPPER: sccache
+      SCCACHE_BUCKET:
+        from_secret: build_cache_bucket
 
-- name: docker-archiver-api
-  image: plugins/docker
-  environment:
-    AWS_ACCESS_KEY_ID:
-      from_secret: build_cache_aws_access_key_id
-    AWS_SECRET_ACCESS_KEY:
-      from_secret: build_cache_aws_secret_access_key
-    SCCACHE_BUCKET:
-      from_secret: build_cache_bucket
-  settings:
-    repo: nhyne/archiver-api
-    auto_tag: true
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-  build_args:
-    - AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-    - AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-    - SCCACHE_BUCKET=$SCCACHE_BUCKET
-  when:
-    changeset:
-      includes: [ "**/**.rs", Dockerfile ]
+  - name: docker-archiver-api
+    image: plugins/docker
+    settings:
+      auto_tag: true
+      password:
+        from_secret: docker_password
+      repo: nhyne/archiver-api
+      username:
+        from_secret: docker_username
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: build_cache_aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: build_cache_aws_secret_access_key
+      SCCACHE_BUCKET:
+        from_secret: build_cache_bucket
 
-- name: docker-diesel-cli
-  image: plugins/docker
-  settings:
-    repo: nhyne/diesel-cli
-    auto_tag: true
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-  when:
-    changeset:
-      includes: [ DieselDockerfile ]
+  - name: docker-diesel-cli
+    image: plugins/docker
+    settings:
+      auto_tag: true
+      password:
+        from_secret: docker_password
+      repo: nhyne/diesel-cli
+      username:
+        from_secret: docker_username
 
-- name: docker-sccache
-  image: plugins/docker
-  settings:
-    repo: nhyne/rust-musl-builder-sccache
-    auto_tag: true
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-  when:
-    changeset:
-      includes: [ SccacheDockerfile ]
+  - name: docker-sccache
+    image: plugins/docker
+    settings:
+      auto_tag: true
+      password:
+        from_secret: docker_password
+      repo: nhyne/rust-musl-builder-sccache
+      username:
+        from_secret: docker_username
+
+trigger:
+  event:
+    - push
+    - pull_request
+    - tag
