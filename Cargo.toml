@@ -30,3 +30,11 @@ openssl = "*"
 version = "0.4.2"
 default-features = false
 features = ["json", "uuid"]
+
+[raze]
+# The WORKSPACE relative path to the Cargo.toml working directory.
+workspace_path = "//cargo"
+
+# The target to generate BUILD rules for.
+target = "x86_64-unknown-linux-gnu"
+genmode = "Remote"
