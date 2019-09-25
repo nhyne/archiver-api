@@ -91,17 +91,20 @@ fn get(query_id: RocketUUID) -> Option<Json<Archive>> {
     }
 }
 
-//fn delete(query_id: RocketUUID) -> JsonValue {
-//    use schema::archives;
-//    use schema::archives::dsl::*;
-//
-//    let connection = establish_connection();
-//
-//    let deleted = archives::table.filter()
-//}
+#[delete("/<query_id>")]
+fn delete(query_id: RocketUUID) -> JsonValue {
+    use archiver_api::db::schema::archives;
+    use archiver_api::db::schema::archives::dsl::*;
+    use std::str::FromStr;
+
+    let connection = establish_connection();
+    let selected_id = Uuid::from_str(&format!("{}", query_id)).unwrap();
+    let deleted = diesel::delete(archives::table.find(selected_id)).execute(&connection);
+    json!({ "status": "ok" })
+}
 
 fn rocket() -> rocket::Rocket {
-    rocket::ignite().mount("/archives", routes![new, get])
+    rocket::ignite().mount("/archives", routes![new, get, delete])
 }
 
 // TODO: Use database pooling
