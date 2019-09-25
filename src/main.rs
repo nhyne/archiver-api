@@ -21,16 +21,20 @@ use dotenv::dotenv;
 use std::env;
 
 mod db;
+mod responses;
 use archiver_api::db::archive::{Archive, NewArchive, RocketArchive};
 use chrono::prelude::{DateTime, Utc};
 use rocket_contrib::json::{Json, JsonValue};
 use rocket_contrib::uuid::Uuid as RocketUUID;
 use uuid::Uuid;
 
+use rocket::http::Status;
+use rocket::response::status::Custom;
+
 use diesel::result::Error;
 
 #[post("/new", format = "json", data = "<input_archive>")]
-fn new(input_archive: Json<RocketArchive>) -> JsonValue {
+fn new(input_archive: Json<RocketArchive>) -> Result<Json<Archive>, Custom<Json<responses::Error>>> {
     use archiver_api::db::schema::archives;
     let connection = establish_connection();
     let target_url = &input_archive.target_url;
@@ -43,8 +47,16 @@ fn new(input_archive: Json<RocketArchive>) -> JsonValue {
     //        .expect("Error saving new archive");
     //    println!("would create: {:#?}", new_archive);
 
-    // TODO: Should return the ID of the record
-    json!({ "status": "ok" })
+    match something {
+        //        Ok(arch) => Ok(Json(arch)),
+        Ok(arch) => Ok(Json(arch)),
+        Err(e) => Err(Custom(
+            Status::InternalServerError,
+            Json(responses::Error {
+                message: e.to_string(),
+            }),
+        )),
+    }
 }
 
 #[get("/<query_id>", format = "json")]
