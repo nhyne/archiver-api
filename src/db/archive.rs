@@ -1,6 +1,6 @@
 use chrono::prelude::{DateTime, Utc};
 use uuid::Uuid;
-use super::schema::archives;
+use crate::db::schema::archives;
 
 #[derive(Serialize, Deserialize)]
 pub struct RocketArchive {
@@ -9,20 +9,18 @@ pub struct RocketArchive {
 
 //pub type AllArchive = (Uuid, String, DateTime<Utc>);
 
-#[derive(Serialize, Deserialize)]
-#[derive(Debug)]
-#[derive(Queryable)]
+#[derive(Serialize, Deserialize, Debug, Queryable)]
 pub struct Archive {
     pub id: Uuid,
-//    pub owner_id: i64,
+    //    pub owner_id: i64,
     pub original_link: String,
-//    pub archive_link: String,
+    //    pub archive_link: String,
     pub archive_timestamp: DateTime<Utc>,
 }
 
 impl Archive {
     pub fn new(original_link: String) -> Archive {
-        Archive{
+        Archive {
             id: Uuid::new_v4(),
             original_link,
             archive_timestamp: Utc::now(),
@@ -31,19 +29,16 @@ impl Archive {
 }
 
 #[derive(Insertable)]
-#[table_name="archives"]
+#[table_name = "archives"]
 pub struct NewArchive<'a> {
-    pub id: Uuid,
     //    pub owner_id: i64,
     pub original_link: &'a String,
     //    pub archive_link: String,
     pub archive_timestamp: DateTime<Utc>,
-
 }
 impl NewArchive<'_> {
     pub fn new(original_link: &String) -> NewArchive {
-        NewArchive{
-            id: Uuid::new_v4(),
+        NewArchive {
             original_link,
             archive_timestamp: Utc::now(),
         }
