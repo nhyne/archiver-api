@@ -60,7 +60,7 @@ fn new(input_archive: Json<RocketArchive>) -> Result<Json<Archive>, Custom<Json<
 }
 
 #[get("/<query_id>", format = "json")]
-fn get(query_id: RocketUUID) -> Json<Archive> {
+fn get(query_id: RocketUUID) -> Option<Json<Archive>> {
     use archiver_api::db::schema::archives;
     use archiver_api::db::schema::archives::dsl::*;
     use std::str::FromStr;
@@ -74,19 +74,21 @@ fn get(query_id: RocketUUID) -> Json<Archive> {
 
     // TODO: Handle this error properly
     let selected = archives::table
-        .filter(id.eq(selected_id))
+        .find(selected_id)
         .select((
             archives::id,
             archives::original_link,
             archives::archive_timestamp,
         ))
-        .first::<(Uuid, String, DateTime<Utc>)>(&connection)
-        .unwrap();
-    Json(Archive {
-        id: selected.0,
-        original_link: selected.1,
-        archive_timestamp: selected.2,
-    })
+        .first::<(Uuid, String, DateTime<Utc>)>(&connection);
+    match selected {
+        Ok(arch) => Some(Json(Archive {
+            id: arch.0,
+            original_link: arch.1,
+            archive_timestamp: arch.2,
+        })),
+        Err(_) => None,
+    }
 }
 
 //fn delete(query_id: RocketUUID) -> JsonValue {
