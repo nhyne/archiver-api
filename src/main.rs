@@ -19,7 +19,7 @@ use dotenv::dotenv;
 use std::env;
 
 mod archive;
-mod schema;
+mod db;
 use self::archive::{Archive, NewArchive, RocketArchive};
 use rocket_contrib::json::{Json, JsonValue};
 use rocket_contrib::uuid::Uuid as RocketUUID;
@@ -30,7 +30,7 @@ use diesel::result::Error;
 
 #[post("/new", format="json", data="<input_archive>")]
 fn new(input_archive: Json<RocketArchive>) -> JsonValue {
-    use schema::archives;
+    use db::schema::archives;
     let connection = establish_connection();
     let target_url = &input_archive.target_url;
     let new_id = Uuid::new_v4();
@@ -52,8 +52,8 @@ fn new(input_archive: Json<RocketArchive>) -> JsonValue {
 
 #[get("/<query_id>", format="json")]
 fn get(query_id: RocketUUID) -> Json<Archive> {
-    use schema::archives;
-    use schema::archives::dsl::*;
+    use db::schema::archives;
+    use db::schema::archives::dsl::*;
     use std::str::FromStr;
 
     // must convert rocketUUId to standard Uuid
@@ -96,7 +96,7 @@ fn establish_connection() -> PgConnection {
 }
 
 fn main() {
-    use self::schema::archives::dsl::*;
+    use db::schema::archives::dsl::*;
     let connection = establish_connection();
     let results = archives.limit(5)
         .load::<Archive>(&connection)

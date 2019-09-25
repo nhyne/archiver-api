@@ -1,6 +1,8 @@
 use chrono::prelude::{DateTime, Utc};
 use uuid::Uuid;
-use super::schema::archives;
+
+use super::db::schema::archives;
+
 
 #[derive(Serialize, Deserialize)]
 pub struct RocketArchive {
