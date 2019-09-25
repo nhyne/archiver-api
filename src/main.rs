@@ -34,11 +34,13 @@ use rocket::response::status::Custom;
 use diesel::result::Error;
 
 #[post("/new", format = "json", data = "<input_archive>")]
-fn new(input_archive: Json<RocketArchive>) -> Result<Json<Archive>, Custom<Json<responses::Error>>> {
+fn new(
+    input_archive: Json<RocketArchive>,
+) -> Result<Json<Archive>, Custom<Json<responses::Error>>> {
     use archiver_api::db::schema::archives;
     let connection = establish_connection();
     let target_url = &input_archive.target_url;
-    let new_archive = NewArchive::new(target_url );
+    let new_archive = NewArchive::new(target_url);
     // TODO: Handle this result properly
     let something: Result<Archive, Error> = diesel::insert_into(archives::table)
         .values(&new_archive)

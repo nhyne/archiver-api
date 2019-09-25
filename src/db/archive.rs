@@ -38,7 +38,7 @@ pub struct NewArchive<'a> {
     pub archive_timestamp: DateTime<Utc>,
 }
 impl NewArchive<'_> {
-    pub fn new(original_link: & String) -> NewArchive {
+    pub fn new(original_link: &String) -> NewArchive {
         NewArchive {
             original_link,
             archive_timestamp: Utc::now(),
