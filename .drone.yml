@@ -25,7 +25,7 @@ steps:
         from_secret: build_cache_aws_secret_access_key
     when:
       changeset:
-        includes: [ src/* ]
+        includes: [ src/ ]
 
   - name: docker-archiver-api
     image: plugins/docker
