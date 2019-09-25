@@ -38,7 +38,6 @@ fn new(input_archive: Json<RocketArchive>) -> Result<Json<Archive>, Custom<Json<
     use archiver_api::db::schema::archives;
     let connection = establish_connection();
     let target_url = &input_archive.target_url;
-    let new_id = Uuid::new_v4();
     let new_archive = NewArchive::new(target_url );
     // TODO: Handle this result properly
     let something: Result<Archive, Error> = diesel::insert_into(archives::table)
@@ -62,8 +61,6 @@ fn new(input_archive: Json<RocketArchive>) -> Result<Json<Archive>, Custom<Json<
 #[get("/<query_id>", format = "json")]
 fn get(query_id: RocketUUID) -> Option<Json<Archive>> {
     use archiver_api::db::schema::archives;
-    use archiver_api::db::schema::archives::dsl::*;
-    use std::str::FromStr;
 
     // must convert rocketUUId to standard Uuid
     // TODO: Handle this error properly
@@ -94,12 +91,10 @@ fn get(query_id: RocketUUID) -> Option<Json<Archive>> {
 #[delete("/<query_id>")]
 fn delete(query_id: RocketUUID) -> JsonValue {
     use archiver_api::db::schema::archives;
-    use archiver_api::db::schema::archives::dsl::*;
-    use std::str::FromStr;
 
     let connection = establish_connection();
     let selected_id = rocket_uuid_to_uuid(query_id);
-    let deleted = diesel::delete(archives::table.find(selected_id)).execute(&connection);
+    let _deleted = diesel::delete(archives::table.find(selected_id)).execute(&connection);
     json!({ "status": "ok" })
 }
 
