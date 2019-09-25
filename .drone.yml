@@ -23,6 +23,8 @@ steps:
         from_secret: build_cache_aws_access_key_id
       AWS_SECRET_ACCESS_KEY:
         from_secret: build_cache_aws_secret_access_key
+      RUSTC_WRAPPER: sccache
+      SCCACHE_BUCKET: nhyne-build-cache
     when:
       changeset:
         includes: [ src/**/* ]

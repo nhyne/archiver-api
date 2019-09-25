@@ -1,6 +1,5 @@
 use chrono::prelude::{DateTime, Utc};
 use uuid::Uuid;
-
 use crate::db::schema::archives;
 
 #[derive(Serialize, Deserialize)]
