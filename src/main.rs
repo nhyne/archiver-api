@@ -68,7 +68,7 @@ fn get(query_id: RocketUUID) -> Option<Json<Archive>> {
     // must convert rocketUUId to standard Uuid
     // TODO: Handle this error properly
     // TODO: Find a better way to cast
-    let selected_id = Uuid::from_str(&format!("{}", query_id)).unwrap();
+    let selected_id = rocket_uuid_to_uuid(query_id);
 
     let connection = establish_connection();
 
@@ -98,7 +98,7 @@ fn delete(query_id: RocketUUID) -> JsonValue {
     use std::str::FromStr;
 
     let connection = establish_connection();
-    let selected_id = Uuid::from_str(&format!("{}", query_id)).unwrap();
+    let selected_id = rocket_uuid_to_uuid(query_id);
     let deleted = diesel::delete(archives::table.find(selected_id)).execute(&connection);
     json!({ "status": "ok" })
 }
@@ -113,6 +113,12 @@ fn establish_connection() -> PgConnection {
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     PgConnection::establish(&database_url).expect(&format!("Error connecting to {}", database_url))
+}
+
+fn rocket_uuid_to_uuid(uuid: RocketUUID) -> Uuid {
+    use std::str::FromStr;
+    // TODO: Make this less hacky
+    Uuid::from_str(&format!("{}", uuid)).unwrap()
 }
 
 fn main() {
