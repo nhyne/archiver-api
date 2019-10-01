@@ -18,16 +18,6 @@ pub struct Archive {
     pub archive_timestamp: DateTime<Utc>,
 }
 
-impl Archive {
-    pub fn new(original_link: String) -> Archive {
-        Archive {
-            id: Uuid::new_v4(),
-            original_link,
-            archive_timestamp: Utc::now(),
-        }
-    }
-}
-
 #[derive(Insertable)]
 #[table_name = "archives"]
 pub struct NewArchive<'a> {
