@@ -10,8 +10,6 @@ jobs:
       image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05
     steps: 
       - uses: actions/checkout@v1
-      - name: install sccache
-        run: cargo install sccache
       - name: test
         env:
           RUSTC_WRAPPER: sccache
