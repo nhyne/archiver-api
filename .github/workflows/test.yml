@@ -5,10 +5,9 @@ on: push
   #     - 'src/**.rs'
 jobs:
   test:
-    runs-on: ubuntu-latest
-      #   container:
-      # image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05
-
+    # runs-on: ubuntu-latest
+    container:
+      image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05
     steps: 
       - uses: actions/checkout@v1
       - name: install sccache
