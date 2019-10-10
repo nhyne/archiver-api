@@ -9,13 +9,15 @@ jobs:
       #   container:
       # image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05
 
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.build_cache_aws_access_key_id }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.build_cache_aws_secret_access_key }}
-      # RUSTC_WRAPPER: sccache
-      SCCACHE_BUCKET: nhyne-build-cache 
     steps: 
       - uses: actions/checkout@v1
+      - name: install sccache
+        run: cargo install sccache
       - name: test
+        env:
+          RUSTC_WRAPPER: sccache
+          AWS_ACCESS_KEY_ID: ${{ secrets.build_cache_aws_access_key_id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.build_cache_aws_secret_access_key }}
+          SCCACHE_BUCKET: nhyne-build-cache 
         run: cargo test --verbose
 
