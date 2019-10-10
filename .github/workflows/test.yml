@@ -5,7 +5,7 @@ on: push
   #     - 'src/**.rs'
 jobs:
   test:
-    # runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     container:
       image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05
     steps: 
