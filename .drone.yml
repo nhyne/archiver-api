@@ -48,6 +48,7 @@ steps:
       password:
         from_secret: docker_password
       repo: nhyne/diesel-cli
+      dockerfile: DieselDockerfile
       username:
         from_secret: docker_username
     when:
@@ -61,6 +62,7 @@ steps:
       password:
         from_secret: docker_password
       repo: nhyne/rust-musl-builder-sccache
+      dockerfile: SccacheDockerfile
       username:
         from_secret: docker_username
     when:
