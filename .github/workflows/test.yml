@@ -1,8 +1,8 @@
 name: Test
-on: 
-  push:
-    paths: 
-      - 'src/**.rs'
+on: push
+  # push:
+  #   paths: 
+  #     - 'src/**.rs'
 jobs:
   test:
     runs-on: ubuntu-latest
