@@ -1,0 +1,17 @@
+name: Test
+on: [push]
+paths: 
+  - 'src/**.rs'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.build_cache_aws_access_key_id }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.build_cache_aws_secret_access_key }}
+      RUSTC_WRAPPER: sccache
+      SCCACHE_BUCKET: nhyne-build-cache 
+    steps: 
+      - uses: actions/checkout@v1
+      - name: test
+        command: cargo test --verbose
+
