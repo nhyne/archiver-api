@@ -15,10 +15,8 @@ jobs:
       SCCACHE_BUCKET: nhyne-build-cache
     steps:
       - uses: actions/checkout@v1
-      - name: start sccache
-        run: sccache --start-server
       - name: test
-        run: cargo test --verbose
-      - name: sccache stats
-        run: sccache -s
-
+        run: |
+          sccache --start-server
+          cargo test --verbose
+          sccache -s
