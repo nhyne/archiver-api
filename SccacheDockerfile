@@ -1,3 +1,4 @@
 FROM ekidd/rust-musl-builder:nightly-2019-09-05 AS build
 
 RUN cargo install sccache
+USER root
