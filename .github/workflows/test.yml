@@ -20,4 +20,3 @@ jobs:
           sccache --start-server
           cargo test --verbose
           sccache -s
-
