@@ -7,7 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05
+      image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05-root
     steps:
       - uses: actions/checkout@v1
       - name: test
