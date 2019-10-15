@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       tag: ${{ github.ref }}
-
     steps:
       - uses: actions/checkout@v1
       - name: build
