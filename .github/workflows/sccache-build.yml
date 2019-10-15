@@ -1,9 +1,9 @@
 name: Sccache Build
 on:
   push:
-    branches:
-      - 'develop'
-      - 'master'
+#    branches:
+#      - 'develop'
+#      - 'master'
     paths:
       - 'SccacheDockerfile'
       - '.github/workflows/sccache-build.yml'
