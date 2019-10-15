@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       tag: ${{ github.ref }}
-    if: github.event_name == 'tag'
     steps:
       - uses: actions/checkout@v1
       - name: build
+        if: github.event_name == 'tag'
         run: |
           docker build -t "nhyne/rust-musl-builder-sccache:$tag" -f SccacheDockerfile .
