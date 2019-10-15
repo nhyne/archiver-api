@@ -1,0 +1,16 @@
+name: Sccache Build
+on:
+  tag:
+    paths:
+      - 'SccacheDockerfile'
+      - '.github/workflows/sccache-build.yml'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      tag: ${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v1
+      - name: build
+        run: |
+          docker build -t "nhyne/rust-musl-builder-sccache:$tag" -f SccacheDockerfile .
