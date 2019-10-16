@@ -1,13 +1,8 @@
 name: Sccache Build
 on:
-  create:
-#    branches:
-#      - 'develop'
-#      - 'master'
+  push:
     tags:
       - 'nightly-20*'
-    paths:
-      - 'SccacheDockerfile'
 jobs:
   build:
     runs-on: ubuntu-latest
