@@ -20,11 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: build
-        if: github.event_name == 'tag'
         run: |
-          docker build -t "nhyne/rust-musl-builder-sccache:$TAG" -f SccacheDockerfile .
+          LOCAL_TAG=$(echo $TAG | cut -d '/' -f3)
+          docker build -t "nhyne/rust-musl-builder-sccache:$LOCAL_TAG" -f SccacheDockerfile .
           docker login -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
-          docker push "nhyne/rust-musl-builder-sccache:$TAG"
+          docker push "nhyne/rust-musl-builder-sccache:$LOCAL_TAG"
       - name: debug event
         env:
           EVENT: ${{ github.event_name }}
