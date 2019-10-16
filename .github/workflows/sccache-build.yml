@@ -1,6 +1,6 @@
 name: Sccache Build
 on:
-  push:
+  create:
 #    branches:
 #      - 'develop'
 #      - 'master'
