@@ -14,10 +14,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      tag: ${{ github.ref }}
+      TAG: ${{ github.ref }}
+      DOCKER_PASSWORD: ${{ secrets.docker_password }}
+      DOCKER_USERNAME: ${{ secrets.docker_username }}
     steps:
       - uses: actions/checkout@v1
       - name: build
         if: github.event_name == 'tag'
         run: |
-          docker build -t "nhyne/rust-musl-builder-sccache:$tag" -f SccacheDockerfile .
+          docker build -t "nhyne/rust-musl-builder-sccache:$TAG" -f SccacheDockerfile .
+          docker login -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
+          docker push "nhyne/rust-musl-builder-sccache:$TAG"
