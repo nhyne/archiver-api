@@ -28,4 +28,7 @@ jobs:
       - name: debug event
         env:
           EVENT: ${{ github.event_name }}
-        run: echo $EVENT
+          REF: ${{ github.ref }}
+        run: |
+          echo $EVENT
+          echo $REF
