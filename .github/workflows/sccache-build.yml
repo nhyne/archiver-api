@@ -5,8 +5,7 @@ on:
 #      - 'develop'
 #      - 'master'
     tags:
-      - 'v*'
-      - '*-test'
+      - 'nightly-20*'
     paths:
       - 'SccacheDockerfile'
       - '.github/workflows/sccache-build.yml'
