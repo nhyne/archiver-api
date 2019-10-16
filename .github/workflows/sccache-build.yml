@@ -20,6 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: build
+        if: contains(github.event_name, 'tags')
         run: |
           LOCAL_TAG=$(echo $TAG | cut -d '/' -f3)
           docker build -t "nhyne/rust-musl-builder-sccache:$LOCAL_TAG" -f SccacheDockerfile .
