@@ -25,3 +25,7 @@ jobs:
           docker build -t "nhyne/rust-musl-builder-sccache:$TAG" -f SccacheDockerfile .
           docker login -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
           docker push "nhyne/rust-musl-builder-sccache:$TAG"
+      - name: debug event
+        env:
+          EVENT: ${{ github.event_name }}
+        run: echo $EVENT
