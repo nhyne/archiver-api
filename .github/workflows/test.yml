@@ -2,8 +2,7 @@ name: Cargo Test
 on:
    push:
      paths:
-       - 'src/**.rs'
-       - '.github/workflows/test.yml'
+       - 'src/**/*.rs'
 jobs:
   test:
     runs-on: ubuntu-latest
