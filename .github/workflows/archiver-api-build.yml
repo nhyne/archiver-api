@@ -1,8 +1,8 @@
-name: Sccache Build
+name: Archiver API Build
 on:
   push:
     tags:
-      - 'nightly-20*'
+      - 'v*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,6 +16,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           LOCAL_TAG=$(echo $TAG | cut -d '/' -f3)
-          docker build -t "nhyne/rust-musl-builder-sccache:$LOCAL_TAG" -f SccacheDockerfile .
+          docker build -t "nhyne/archiver-api:$LOCAL_TAG" .
           docker login -p $DOCKER_PASSWORD -u $DOCKER_USERNAME
-          docker push "nhyne/rust-musl-builder-sccache:$LOCAL_TAG"
+          docker push "nhyne/archiver-api:$LOCAL_TAG"
