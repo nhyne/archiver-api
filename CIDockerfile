@@ -1,4 +1,5 @@
 FROM nhyne/rust-musl-builder-sccache:nightly-2019-09-05
-RUN rustup show
-RUN rustup component add clippy
-RUN rustup component add rustfmt
+
+RUN rustup show && \
+    rustup component add clippy && \
+    rustup component add rustfmt
