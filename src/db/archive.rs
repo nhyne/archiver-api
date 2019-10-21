@@ -22,12 +22,12 @@ pub struct Archive {
 #[table_name = "archives"]
 pub struct NewArchive<'a> {
     //    pub owner_id: i64,
-    pub original_link: &'a String,
+    pub original_link: &'a str,
     //    pub archive_link: String,
     pub archive_timestamp: DateTime<Utc>,
 }
 impl NewArchive<'_> {
-    pub fn new(original_link: &String) -> NewArchive {
+    pub fn new(original_link: &str) -> NewArchive {
         NewArchive {
             original_link,
             archive_timestamp: Utc::now(),
