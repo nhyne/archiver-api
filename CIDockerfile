@@ -1,4 +1,4 @@
-FROM nhyne/rust-musl-builder-sccache:nightly-2019-09-05
+FROM nhyne/rust-musl-builder-sccache:nightly-2019-09-05-test
 
 RUN whoami
 RUN pwd
