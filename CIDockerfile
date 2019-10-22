@@ -1,7 +1,9 @@
 FROM nhyne/rust-musl-builder-sccache:nightly-2019-09-05-test
 
-RUN whoami
-RUN pwd
-RUN rustup show && \
-    rustup component add clippy && \
+USER rust
+WORKDIR /home/rust/src
+RUN rustup component add clippy && \
     rustup component add rustfmt
+
+USER root
+WORKDIR /home/rust/src
