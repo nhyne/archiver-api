@@ -11,7 +11,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     container:
-      image: nhyne/rust-musl-builder-sccache:nightly-2019-09-05
+      image: nhyne/nightly-rust-ci:nightly-2019-09-05-final
     env:
       RUSTC_WRAPPER: sccache
       AWS_ACCESS_KEY_ID: ${{ secrets.build_cache_aws_access_key_id }}
