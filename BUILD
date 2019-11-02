@@ -2,7 +2,7 @@ load("@io_bazel_rules_rust//rust:rust.bzl", "rust_binary")
 
 rust_binary(
     name = "archiver-api",
-    srcs = glob(["src/**/*.rs"]),
+    srcs = glob(["src/**/*.rs", "src/*.rs"]),
     deps = [
         "//cargo:chrono",
         "//cargo:diesel",
@@ -14,4 +14,5 @@ rust_binary(
         "//cargo:serde_json",
         "//cargo:uuid",
     ],
+
 )
