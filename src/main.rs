@@ -59,7 +59,6 @@ fn new(
         )),
     }
 }
-
 #[get("/<query_id>", format = "json")]
 fn get(query_id: RocketUUID) -> Option<Json<Archive>> {
     use archiver_api::db::schema::archives;

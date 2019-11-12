@@ -6,7 +6,6 @@ use crate::db::schema::archives;
 pub struct RocketArchive {
     pub target_url: String,
 }
-
 //pub type AllArchive = (Uuid, String, DateTime<Utc>);
 #[derive(Serialize, Deserialize, Debug, Queryable)]
 pub struct Archive {
@@ -16,7 +15,6 @@ pub struct Archive {
     //    pub archive_link: String,
     pub archive_timestamp: DateTime<Utc>,
 }
-
 #[derive(Insertable)]
 #[table_name = "archives"]
 pub struct NewArchive<'a> {
