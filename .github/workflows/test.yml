@@ -1,10 +1,6 @@
 name: Cargo Test
 on:
   push:
-    tags:
-      - 'v*'
-    branches:
-      - '*'
     paths:
       - 'src/**/*.rs'
       - 'src/*.rs'
