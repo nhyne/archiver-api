@@ -8,7 +8,6 @@ pub struct RocketArchive {
 }
 
 //pub type AllArchive = (Uuid, String, DateTime<Utc>);
-
 #[derive(Serialize, Deserialize, Debug, Queryable)]
 pub struct Archive {
     pub id: Uuid,
