@@ -90,6 +90,19 @@ fn get(query_id: RocketUUID) -> Option<Json<Archive>> {
     }
 }
 
+#[get("/all", format = "json")]
+fn get_all() -> Option<Json<Vec<Archive>>> {
+    use archiver_api::db::schema::archives;
+    let connection = establish_connection();
+
+    // TODO: Handle this error properly
+    let selected: Result<Vec<Archive>, Error> = archives::table.load(&connection);
+    match selected {
+        Ok(arch) => Some(Json(arch)),
+        Err(_) => None,
+    }
+}
+
 #[delete("/<query_id>")]
 fn delete(query_id: RocketUUID) -> JsonValue {
     use archiver_api::db::schema::archives;
@@ -101,7 +114,7 @@ fn delete(query_id: RocketUUID) -> JsonValue {
 }
 
 fn rocket() -> rocket::Rocket {
-    rocket::ignite().mount("/archives", routes![new, get, delete])
+    rocket::ignite().mount("/archives", routes![new, get, delete, get_all])
 }
 
 // TODO: Use database pooling
@@ -109,7 +122,8 @@ fn establish_connection() -> PgConnection {
     dotenv().ok();
 
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    PgConnection::establish(&database_url).unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
+    PgConnection::establish(&database_url)
+        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
 }
 
 fn rocket_uuid_to_uuid(uuid: RocketUUID) -> Uuid {
