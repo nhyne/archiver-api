@@ -9,9 +9,7 @@ pub struct RocketArchive {
 #[derive(Serialize, Deserialize, Debug, Queryable)]
 pub struct Archive {
     pub id: Uuid,
-    //    pub owner_id: i64,
     pub original_link: String,
-    //    pub archive_link: String,
     pub archive_timestamp: DateTime<Utc>,
 }
 #[derive(Insertable)]
