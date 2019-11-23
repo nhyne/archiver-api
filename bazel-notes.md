@@ -1,0 +1,3 @@
+Still having issues with getting bazel to build. Figured out the rust version issue finally though!
+
+The log crate and openssl crate are having issues compiling. I believe that they need some additional configuration to get them working. [This section](https://github.com/google/cargo-raze#handling-unconventional-crates) of the cargo-raze readme discusses how some crates can have weird behavior and may require some extra steps to get them working. I'm not sure where to find the proper flags/features/etc. in order to get them to build. I'm guessing it's going to be a lot of manual debugging, guessing, and investigating options for the crates that have these issues.
