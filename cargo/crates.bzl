@@ -476,21 +476,21 @@ def raze_fetch_remote_crates():
     )
 
     _new_http_archive(
-        name = "raze__openssl__0_10_25",
-        url = "https://crates-io.s3-us-west-1.amazonaws.com/crates/openssl/openssl-0.10.25.crate",
+        name = "raze__openssl__0_10_26",
+        url = "https://crates-io.s3-us-west-1.amazonaws.com/crates/openssl/openssl-0.10.26.crate",
         type = "tar.gz",
-        sha256 = "2f372b2b53ce10fb823a337aaa674e3a7d072b957c6264d0f4ff0bd86e657449",
-        strip_prefix = "openssl-0.10.25",
-        build_file = Label("//cargo/remote:openssl-0.10.25.BUILD")
+        sha256 = "3a3cc5799d98e1088141b8e01ff760112bbd9f19d850c124500566ca6901a585",
+        strip_prefix = "openssl-0.10.26",
+        build_file = Label("//cargo/remote:openssl-0.10.26.BUILD")
     )
 
     _new_http_archive(
-        name = "raze__openssl_sys__0_9_52",
-        url = "https://crates-io.s3-us-west-1.amazonaws.com/crates/openssl-sys/openssl-sys-0.9.52.crate",
+        name = "raze__openssl_sys__0_9_53",
+        url = "https://crates-io.s3-us-west-1.amazonaws.com/crates/openssl-sys/openssl-sys-0.9.53.crate",
         type = "tar.gz",
-        sha256 = "c977d08e1312e2f7e4b86f9ebaa0ed3b19d1daff75fae88bbb88108afbd801fc",
-        strip_prefix = "openssl-sys-0.9.52",
-        build_file = Label("//cargo/remote:openssl-sys-0.9.52.BUILD")
+        sha256 = "465d16ae7fc0e313318f7de5cecf57b2fbe7511fd213978b457e1c96ff46736f",
+        strip_prefix = "openssl-sys-0.9.53",
+        build_file = Label("//cargo/remote:openssl-sys-0.9.53.BUILD")
     )
 
     _new_http_archive(

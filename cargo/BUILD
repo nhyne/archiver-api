@@ -22,7 +22,11 @@ alias(
 )
 alias(
     name = "openssl",
-    actual = "@raze__openssl__0_10_25//:openssl",
+    actual = "@raze__openssl__0_10_26//:openssl",
+)
+alias(
+    name = "openssl_sys",
+    actual = "@raze__openssl_sys__0_9_53//:openssl_sys",
 )
 alias(
     name = "rocket",
