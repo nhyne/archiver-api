@@ -20,8 +20,7 @@ http_archive(
     url = "https://github.com/bazelbuild/bazel-skylib/archive/1.0.0.tar.gz",
 )
 
-load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repositories")
-rust_repositories()
+load("@io_bazel_rules_rust//rust:repositories.bzl", "rust_repository_set")
 
 load("@io_bazel_rules_rust//:workspace.bzl", "bazel_version")
 bazel_version(name = "bazel_version")
@@ -29,3 +28,11 @@ bazel_version(name = "bazel_version")
 load("//cargo:crates.bzl", "raze_fetch_remote_crates")
 
 raze_fetch_remote_crates()
+
+rust_repository_set(
+    name = "rust_darwin_x86_64",
+    exec_triple = "x86_64-apple-darwin",
+    extra_target_triples = [],
+    version = "nightly",
+    iso_date = "2019-09-05",
+)
