@@ -44,21 +44,24 @@ workspace_path = "//cargo"
 target = "x86_64-unknown-linux-gnu"
 genmode = "Remote"
 
-[raze.crates.openssl-sys.'0.9.21']
-additional_flags = [
-  # Vendored openssl is 1.0.2m
-  "--cfg=ossl102",
-  "--cfg=version=102",
-]
-additional_deps = [
-  "//third_party/openssl:crypto",
-  "//third_party/openssl:ssl",
-]
+#[raze.crates.openssl-sys.'0.9.21']
+#additional_flags = [
+#  # Vendored openssl is 1.0.2m
+#  "--cfg=ossl102",
+#  "--cfg=version=102",
+#]
+#additional_deps = [
+#  "//third_party/openssl:crypto",
+#  "//third_party/openssl:ssl",
+#]
+#
+#[raze.crates.openssl.'0.10.26']
+#additional_flags = [
+#  # Vendored openssl is 1.0.2m
+#  "--cfg=ossl102",
+#  "--cfg=version=102",
+#  "--cfg=ossl10x",
+#]
 
-[raze.crates.openssl.'0.10.26']
-additional_flags = [
-  # Vendored openssl is 1.0.2m
-  "--cfg=ossl102",
-  "--cfg=version=102",
-  "--cfg=ossl10x",
-]
+[raze.crates.log.'0.4.8']
+gen_buildrs = true
