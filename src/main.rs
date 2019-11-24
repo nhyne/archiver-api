@@ -118,8 +118,25 @@ fn delete(query_id: RocketUUID) -> JsonValue {
     json!({ "status": "ok" })
 }
 
+#[catch(404)]
+fn not_found() -> JsonValue {
+    json!("{\"message\": \"Path not found!\"}")
+}
+
+#[catch(400)]
+fn bad_request() -> JsonValue {
+    json!("{\"message\": \"Bad request! Looks like you're missing something or something is formatted improperly.\"}")
+}
+
+#[catch(401)]
+fn unauthorized() -> JsonValue {
+    json!("{\"message\": \"Unauthorized! Make sure you're including the Authorization header.\"}")
+}
+
 fn rocket() -> rocket::Rocket {
-    rocket::ignite().mount("/api/archives", routes![new, get, delete, get_all])
+    rocket::ignite()
+        .mount("/api/archives", routes![new, get, delete, get_all])
+        .register(catchers![not_found, unauthorized, bad_request])
 }
 
 // TODO: Use database pooling

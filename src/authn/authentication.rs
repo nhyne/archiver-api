@@ -49,7 +49,7 @@ fn validate_jwt(auth_header: String) -> Result<(), Box<dyn std::error::Error>> {
     let new_post = reqwest::Client::new()
         //        .post("http://user-api.user/api/users/verify_jwt")
         .post("http://localhost:8001/api/users/verify_jwt")
-        .header("Authorization", format!("{}", auth_header))
+        .header("Authorization", auth_header)
         .send();
     match new_post {
         Ok(resp) => {
