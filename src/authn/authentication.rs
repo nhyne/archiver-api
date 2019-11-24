@@ -1,9 +1,23 @@
-use std::collections::HashMap;
-use rocket::Outcome;
 use rocket::http::Status;
-use rocket::request::{self, Request, FromRequest};
+use rocket::request::{self, FromRequest, Request};
+use rocket::Outcome;
+use std::error::Error;
+use std::fmt;
 
 pub struct AuthenticatedJWT(String);
+
+#[derive(Debug)]
+struct JWTResponseError(String);
+
+// I really do not want to add this code. I would much rather use a generic HTTP error from another crate.
+//   To get myself moving though I'm just copying this.
+impl fmt::Display for JWTResponseError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "There is an error: {}", self.0)
+    }
+}
+
+impl Error for JWTResponseError {}
 
 #[derive(Debug)]
 pub enum JWTError {
@@ -27,15 +41,29 @@ impl<'a, 'r> FromRequest<'a, 'r> for AuthenticatedJWT {
 }
 
 // This function needs to call to user service
-fn is_valid(_jwt: &str) -> bool {
-    false
+fn is_valid(jwt: &str) -> bool {
+    validate_jwt(String::from(jwt)).is_ok()
 }
 
-//async fn validate_jwt(_jwt: &str) -> Result<(), Box<dyn std::error::Error>> {
-//    let new_post = reqwest::Client::new()
-//        .post("http://user-api.user/api/users/verify_jwt")
-////        .body('_ jwt)
-//        .send();
-//    println!("{:#?}", new_post);
-//    Ok(())
-//}
+fn validate_jwt(jwt: String) -> Result<(), Box<dyn std::error::Error>> {
+    let new_post = reqwest::Client::new()
+        //        .post("http://user-api.user/api/users/verify_jwt")
+        .post("http://localhost:8001/api/users/verify_jwt")
+        .header("Content-Type", "application/json")
+        .body(format!("{{ \"token\": \"{}\" }}", jwt))
+        .send();
+    println!("{:#?}", new_post);
+    match new_post {
+        Ok(resp) => {
+            let response_code = resp.status().as_u16();
+            match response_code {
+                200 => Ok(()),
+                x => Err(Box::new(JWTResponseError(format!(
+                    "Got bad response code: {:#?}",
+                    x
+                )))),
+            }
+        }
+        Err(e) => Err(Box::new(e)),
+    }
+}
