@@ -1,9 +1,0 @@
-FROM nhyne/rust-musl-builder-sccache:nightly-2019-09-05-test
-
-USER rust
-WORKDIR /home/rust/src
-RUN rustup component add clippy && \
-    rustup component add rustfmt
-
-USER root
-WORKDIR /home/rust/src

@@ -3,3 +3,4 @@ docker/**/deps
 docker/cargo-registry
 .idea
 target
+scripts
