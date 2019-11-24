@@ -114,7 +114,7 @@ fn delete(query_id: RocketUUID) -> JsonValue {
 }
 
 fn rocket() -> rocket::Rocket {
-    rocket::ignite().mount("/archives", routes![new, get, delete, get_all])
+    rocket::ignite().mount("/api/archives", routes![new, get, delete, get_all])
 }
 
 // TODO: Use database pooling
