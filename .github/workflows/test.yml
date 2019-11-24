@@ -8,9 +8,9 @@ on:
       - 'Cargo.lock'
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container:
-      image: nhyne/nightly-rust-ci:nightly-2019-09-05-final
+      image: nhyne/rust-musl-builder:nightly
     env:
       RUSTC_WRAPPER: sccache
       AWS_ACCESS_KEY_ID: ${{ secrets.build_cache_aws_access_key_id }}
