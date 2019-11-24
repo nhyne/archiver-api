@@ -18,7 +18,7 @@ pub struct Archive {
     pub archive_timestamp: DateTime<Utc>,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, Debug)]
 #[table_name = "archives"]
 pub struct NewArchive<'a> {
     //    pub owner_id: i64,

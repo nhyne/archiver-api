@@ -51,7 +51,6 @@ fn validate_jwt(auth_header: String) -> Result<(), Box<dyn std::error::Error>> {
         .post("http://localhost:8001/api/users/verify_jwt")
         .header("Authorization", format!("{}", auth_header))
         .send();
-    println!("{:#?}", new_post);
     match new_post {
         Ok(resp) => {
             let response_code = resp.status().as_u16();
