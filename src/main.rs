@@ -20,6 +20,9 @@ use diesel::prelude::*;
 use dotenv::dotenv;
 use std::env;
 
+use authn::authentication::AuthenticatedJWT;
+
+mod authn;
 mod db;
 mod responses;
 use archiver_api::db::archive::{Archive, NewArchive, RocketArchive};
@@ -36,8 +39,10 @@ use diesel::result::Error;
 #[post("/new", format = "json", data = "<input_archive>")]
 fn new(
     input_archive: Json<RocketArchive>,
+    _jwt: AuthenticatedJWT,
 ) -> Result<Json<Archive>, Custom<Json<responses::Error>>> {
     use archiver_api::db::schema::archives;
+
     let connection = establish_connection();
     let target_url = &input_archive.target_url;
     let new_archive = NewArchive::new(target_url);
