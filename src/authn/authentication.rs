@@ -45,12 +45,11 @@ fn is_valid(jwt: &str) -> bool {
     validate_jwt(String::from(jwt)).is_ok()
 }
 
-fn validate_jwt(jwt: String) -> Result<(), Box<dyn std::error::Error>> {
+fn validate_jwt(auth_header: String) -> Result<(), Box<dyn std::error::Error>> {
     let new_post = reqwest::Client::new()
         //        .post("http://user-api.user/api/users/verify_jwt")
         .post("http://localhost:8001/api/users/verify_jwt")
-        .header("Content-Type", "application/json")
-        .body(format!("{{ \"token\": \"{}\" }}", jwt))
+        .header("Authorization", format!("{}", auth_header))
         .send();
     println!("{:#?}", new_post);
     match new_post {
