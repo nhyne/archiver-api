@@ -10,3 +10,5 @@ linux_build:
 image: linux_build
 	docker build -t nhyne/archiver-api:latest -f LocalDockerfile .
 
+clippy:
+	cargo clippy -- -D warnings
