@@ -18,10 +18,14 @@ jobs:
       SCCACHE_BUCKET: nhyne-build-cache
     steps:
       - uses: actions/checkout@v1
-#      - name: format
-#        run: ./scripts/ci/format.sh
+      - name: start sccache
+        run: sccache --start-server
+      - name: format
+        run: |
+          ./scripts/ci/format.sh
+          sccache -s
       - name: test
         run: |
-          sccache --start-server
-          cargo test --verbose
+          rustup target add x86_64-unknown-linux-musl
+          cargo test --verbose --target x86_64-unknown-linux-musl
           sccache -s
