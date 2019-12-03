@@ -33,7 +33,7 @@ rust_library(
     edition = "2015",
     srcs = glob(["**/*.rs"]),
     deps = [
-        "@raze__num_traits__0_2_8//:num_traits",
+        "@raze__num_traits__0_2_10//:num_traits",
     ],
     rustc_flags = [
         "--cap-lints=allow",

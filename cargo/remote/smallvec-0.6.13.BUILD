@@ -26,19 +26,21 @@ load(
 # Unsupported target "bench" with type "bench" omitted
 
 rust_library(
-    name = "unicode_normalization",
-    crate_root = "src/lib.rs",
+    name = "smallvec",
+    crate_root = "lib.rs",
     crate_type = "lib",
     edition = "2015",
     srcs = glob(["**/*.rs"]),
     deps = [
-        "@raze__smallvec__0_6_11//:smallvec",
+        "@raze__maybe_uninit__2_0_0//:maybe_uninit",
     ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
-    version = "0.1.8",
+    version = "0.6.13",
     crate_features = [
+        "default",
+        "std",
     ],
 )
 

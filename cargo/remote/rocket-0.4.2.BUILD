@@ -54,7 +54,7 @@ rust_library(
         "@raze__base64__0_10_1//:base64",
         "@raze__log__0_4_8//:log",
         "@raze__memchr__2_2_1//:memchr",
-        "@raze__num_cpus__1_10_1//:num_cpus",
+        "@raze__num_cpus__1_11_1//:num_cpus",
         "@raze__pear__0_1_2//:pear",
         "@raze__rocket_codegen__0_4_2//:rocket_codegen",
         "@raze__rocket_http__0_4_2//:rocket_http",

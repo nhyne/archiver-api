@@ -12,7 +12,7 @@ package(default_visibility = [
 ])
 
 licenses([
-  "notice", # "MIT,Apache-2.0"
+  "restricted", # "Apache-2.0 OR MIT"
 ])
 
 load(
@@ -23,9 +23,11 @@ load(
 )
 
 
+# Unsupported target "build-script-build" with type "custom-build" omitted
+# Unsupported target "doesnt_drop" with type "test" omitted
 
 rust_library(
-    name = "foreign_types_shared",
+    name = "maybe_uninit",
     crate_root = "src/lib.rs",
     crate_type = "lib",
     edition = "2015",
@@ -35,7 +37,7 @@ rust_library(
     rustc_flags = [
         "--cap-lints=allow",
     ],
-    version = "0.1.1",
+    version = "2.0.0",
     crate_features = [
     ],
 )

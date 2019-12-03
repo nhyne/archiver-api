@@ -36,7 +36,7 @@ rust_library(
         "@raze__indexmap__1_3_0//:indexmap",
         "@raze__pear__0_1_2//:pear",
         "@raze__percent_encoding__1_0_1//:percent_encoding",
-        "@raze__smallvec__0_6_11//:smallvec",
+        "@raze__smallvec__0_6_13//:smallvec",
         "@raze__state__0_4_1//:state",
         "@raze__time__0_1_42//:time",
         "@raze__unicode_xid__0_1_0//:unicode_xid",

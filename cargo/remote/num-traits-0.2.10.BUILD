@@ -12,7 +12,7 @@ package(default_visibility = [
 ])
 
 licenses([
-  "notice", # "MIT"
+  "notice", # "MIT,Apache-2.0"
 ])
 
 load(
@@ -23,21 +23,21 @@ load(
 )
 
 
-# Unsupported target "build-script-main" with type "custom-build" omitted
+# Unsupported target "build-script-build" with type "custom-build" omitted
+# Unsupported target "cast" with type "test" omitted
 
 rust_library(
-    name = "openssl_sys",
+    name = "num_traits",
     crate_root = "src/lib.rs",
     crate_type = "lib",
     edition = "2015",
     srcs = glob(["**/*.rs"]),
     deps = [
-        "@raze__libc__0_2_65//:libc",
     ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
-    version = "0.9.53",
+    version = "0.2.10",
     crate_features = [
     ],
 )

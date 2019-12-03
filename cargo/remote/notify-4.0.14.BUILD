@@ -37,11 +37,10 @@ rust_library(
     srcs = glob(["**/*.rs"]),
     deps = [
         "@raze__bitflags__1_2_1//:bitflags",
-        "@raze__filetime__0_2_7//:filetime",
-        "@raze__inotify__0_6_1//:inotify",
+        "@raze__filetime__0_2_8//:filetime",
+        "@raze__fsevent__0_4_0//:fsevent",
+        "@raze__fsevent_sys__2_0_1//:fsevent_sys",
         "@raze__libc__0_2_65//:libc",
-        "@raze__mio__0_6_19//:mio",
-        "@raze__mio_extras__2_0_5//:mio_extras",
         "@raze__walkdir__2_2_9//:walkdir",
     ],
     rustc_flags = [

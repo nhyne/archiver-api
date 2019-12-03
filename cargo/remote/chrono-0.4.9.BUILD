@@ -33,7 +33,7 @@ rust_library(
     deps = [
         "@raze__libc__0_2_65//:libc",
         "@raze__num_integer__0_1_41//:num_integer",
-        "@raze__num_traits__0_2_8//:num_traits",
+        "@raze__num_traits__0_2_10//:num_traits",
         "@raze__serde__1_0_102//:serde",
         "@raze__time__0_1_42//:time",
     ],

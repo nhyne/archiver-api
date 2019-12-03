@@ -29,17 +29,15 @@ rust_library(
     name = "smallvec",
     crate_root = "lib.rs",
     crate_type = "lib",
-    edition = "2015",
+    edition = "2018",
     srcs = glob(["**/*.rs"]),
     deps = [
     ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
-    version = "0.6.11",
+    version = "1.0.0",
     crate_features = [
-        "default",
-        "std",
     ],
 )
 

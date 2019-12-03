@@ -33,7 +33,7 @@ rust_library(
     deps = [
         "@raze__proc_macro2__1_0_6//:proc_macro2",
         "@raze__quote__1_0_2//:quote",
-        "@raze__syn__1_0_7//:syn",
+        "@raze__syn__1_0_8//:syn",
     ],
     rustc_flags = [
         "--cap-lints=allow",

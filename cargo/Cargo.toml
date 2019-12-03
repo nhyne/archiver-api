@@ -27,8 +27,8 @@ dotenv = "0.9.0"
 # data types
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "0.6.5", features = ["serde", "v4"] }
-openssl = "0.10.26"
-openssl-sys = "0.9.21"
+#openssl = "0.10.26"
+#openssl-sys = "0.9.53"
 
 
 [dependencies.rocket_contrib]
@@ -41,27 +41,74 @@ features = ["json", "uuid"]
 workspace_path = "//cargo"
 
 # The target to generate BUILD rules for.
-target = "x86_64-unknown-linux-gnu"
+target = "x86_64-apple-darwin"
 genmode = "Remote"
 
-#[raze.crates.openssl-sys.'0.9.21']
+#[raze.crates.openssl-sys.'0.9.53']
+#gen_buildrs = true
 #additional_flags = [
 #  # Vendored openssl is 1.0.2m
 #  "--cfg=ossl102",
 #  "--cfg=version=102",
 #]
-#additional_deps = [
-#  "//third_party/openssl:crypto",
-#  "//third_party/openssl:ssl",
-#]
+##additional_deps = [
+##  "//third_party/openssl:crypto",
+##  "//third_party/openssl:ssl",
+##]
 #
 #[raze.crates.openssl.'0.10.26']
+#gen_buildrs = true
 #additional_flags = [
 #  # Vendored openssl is 1.0.2m
 #  "--cfg=ossl102",
-#  "--cfg=version=102",
+#  "--cfg='version=102'",
 #  "--cfg=ossl10x",
 #]
 
+[raze.crates.ring.'0.13.5']
+gen_buildrs = true
+
 [raze.crates.log.'0.4.8']
+gen_buildrs = true
+additional_flags = [
+    "--cfg=atomic_cas"
+]
+
+[raze.crates.log.'0.3.9']
+gen_buildrs = true
+
+[raze.crates.syn.'1.0.8']
+gen_buildrs = true
+skipped_deps = [
+    "proc-macro"
+]
+
+[raze.crates.syn.'0.15.44']
+gen_buildrs = true
+skipped_dependencies = [
+    "proc-macro"
+]
+
+[raze.crates.proc_macro2.'0.4.19']
+additional_flags = [
+#  "--cfg=wrap_proc_macro",
+  "--cfg=use_proc_macro",
+#  "--cfg=slow_extend",
+]
+
+[raze.crates.proc_macro2.'0.4.4']
+additional_flags = [
+#  "--cfg=wrap_proc_macro",
+  "--cfg=use_proc_macro",
+#  "--cfg=slow_extend",
+]
+
+[raze.crates.proc_macro2.'0.3.8']
+additional_flags = [
+#  "--cfg=wrap_proc_macro",
+  "--cfg=use_proc_macro",
+#  "--cfg=slow_extend",
+]
+
+[raze.crates.notify.'4.0.14']
 gen_buildrs = true

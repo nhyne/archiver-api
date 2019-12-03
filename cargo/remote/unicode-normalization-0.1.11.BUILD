@@ -23,20 +23,21 @@ load(
 )
 
 
+# Unsupported target "bench" with type "bench" omitted
 
 rust_library(
-    name = "foreign_types",
+    name = "unicode_normalization",
     crate_root = "src/lib.rs",
     crate_type = "lib",
     edition = "2015",
     srcs = glob(["**/*.rs"]),
     deps = [
-        "@raze__foreign_types_shared__0_1_1//:foreign_types_shared",
+        "@raze__smallvec__1_0_0//:smallvec",
     ],
     rustc_flags = [
         "--cap-lints=allow",
     ],
-    version = "0.3.2",
+    version = "0.1.11",
     crate_features = [
     ],
 )

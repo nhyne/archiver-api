@@ -22,8 +22,65 @@ load(
     "rust_test",
 )
 
+rust_binary(
+    name = "syn_build_script",
+    srcs = glob(["**/*.rs"]),
+    crate_root = "build.rs",
+    edition = "2018",
+    deps = [
+    ],
+    rustc_flags = [
+        "--cap-lints=allow",
+    ],
+    crate_features = [
+      "clone-impls",
+      "default",
+      "derive",
+      "fold",
+      "full",
+      "parsing",
+      "printing",
+      "proc-macro",
+      "proc-macro2",
+      "quote",
+      "visit",
+    ],
+    data = glob(["*"]),
+    version = "1.0.8",
+    visibility = ["//visibility:private"],
+)
 
-# Unsupported target "build-script-build" with type "custom-build" omitted
+genrule(
+    name = "syn_build_script_executor",
+    srcs = glob(["*", "**/*.rs"]),
+    outs = ["syn_out_dir_outputs.tar.gz"],
+    tools = [
+      ":syn_build_script",
+    ],
+    tags = ["no-sandbox"],
+    cmd = "mkdir -p $$(dirname $@)/syn_out_dir_outputs/;"
+        + " (export CARGO_MANIFEST_DIR=\"$$PWD/$$(dirname $(location :Cargo.toml))\";"
+        # TODO(acmcarther): This needs to be revisited as part of the cross compilation story.
+        #                   See also: https://github.com/google/cargo-raze/pull/54
+        + " export TARGET='x86_64-apple-darwin';"
+        + " export RUST_BACKTRACE=1;"
+        + " export CARGO_FEATURE_CLONE_IMPLS=1;"
+        + " export CARGO_FEATURE_DEFAULT=1;"
+        + " export CARGO_FEATURE_DERIVE=1;"
+        + " export CARGO_FEATURE_FOLD=1;"
+        + " export CARGO_FEATURE_FULL=1;"
+        + " export CARGO_FEATURE_PARSING=1;"
+        + " export CARGO_FEATURE_PRINTING=1;"
+        + " export CARGO_FEATURE_PROC_MACRO=1;"
+        + " export CARGO_FEATURE_PROC_MACRO2=1;"
+        + " export CARGO_FEATURE_QUOTE=1;"
+        + " export CARGO_FEATURE_VISIT=1;"
+        + " export OUT_DIR=$$PWD/$$(dirname $@)/syn_out_dir_outputs;"
+        + " export BINARY_PATH=\"$$PWD/$(location :syn_build_script)\";"
+        + " export OUT_TAR=$$PWD/$@;"
+        + " cd $$(dirname $(location :Cargo.toml)) && $$BINARY_PATH && tar -czf $$OUT_TAR -C $$OUT_DIR .)"
+)
+
 # Unsupported target "file" with type "bench" omitted
 # Unsupported target "rust" with type "bench" omitted
 
@@ -41,7 +98,8 @@ rust_library(
     rustc_flags = [
         "--cap-lints=allow",
     ],
-    version = "1.0.7",
+    out_dir_tar = ":syn_build_script_executor",
+    version = "1.0.8",
     crate_features = [
         "clone-impls",
         "default",
@@ -50,7 +108,6 @@ rust_library(
         "full",
         "parsing",
         "printing",
-        "proc-macro",
         "proc-macro2",
         "quote",
         "visit",

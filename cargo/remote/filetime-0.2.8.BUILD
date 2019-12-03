@@ -12,7 +12,7 @@ package(default_visibility = [
 ])
 
 licenses([
-  "notice", # "Apache-2.0"
+  "notice", # "MIT,Apache-2.0"
 ])
 
 load(
@@ -23,30 +23,21 @@ load(
 )
 
 
-# Unsupported target "build-script-build" with type "custom-build" omitted
-# Unsupported target "mk_certs" with type "example" omitted
 
 rust_library(
-    name = "openssl",
+    name = "filetime",
     crate_root = "src/lib.rs",
     crate_type = "lib",
-    edition = "2015",
+    edition = "2018",
     srcs = glob(["**/*.rs"]),
     deps = [
-        "@raze__bitflags__1_2_1//:bitflags",
         "@raze__cfg_if__0_1_10//:cfg_if",
-        "@raze__foreign_types__0_3_2//:foreign_types",
-        "@raze__lazy_static__1_4_0//:lazy_static",
         "@raze__libc__0_2_65//:libc",
-        "@raze__openssl_sys__0_9_53//:openssl_sys",
     ],
     rustc_flags = [
         "--cap-lints=allow",
-        "--cfg=ossl102",
-        "--cfg=version=102",
-        "--cfg=ossl10x",
     ],
-    version = "0.10.26",
+    version = "0.2.8",
     crate_features = [
     ],
 )

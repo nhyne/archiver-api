@@ -36,7 +36,7 @@ rust_library(
         "@raze__language_tags__0_2_2//:language_tags",
         "@raze__log__0_3_9//:log",
         "@raze__mime__0_2_6//:mime",
-        "@raze__num_cpus__1_10_1//:num_cpus",
+        "@raze__num_cpus__1_11_1//:num_cpus",
         "@raze__time__0_1_42//:time",
         "@raze__traitobject__0_1_0//:traitobject",
         "@raze__typeable__0_1_2//:typeable",

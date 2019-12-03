@@ -22,8 +22,45 @@ load(
     "rust_test",
 )
 
+rust_binary(
+    name = "log_build_script",
+    srcs = glob(["**/*.rs"]),
+    crate_root = "build.rs",
+    edition = "2015",
+    deps = [
+    ],
+    rustc_flags = [
+        "--cap-lints=allow",
+    ],
+    crate_features = [
+      "std",
+    ],
+    data = glob(["*"]),
+    version = "0.4.8",
+    visibility = ["//visibility:private"],
+)
 
-# Unsupported target "build-script-build" with type "custom-build" omitted
+genrule(
+    name = "log_build_script_executor",
+    srcs = glob(["*", "**/*.rs"]),
+    outs = ["log_out_dir_outputs.tar.gz"],
+    tools = [
+      ":log_build_script",
+    ],
+    tags = ["no-sandbox"],
+    cmd = "mkdir -p $$(dirname $@)/log_out_dir_outputs/;"
+        + " (export CARGO_MANIFEST_DIR=\"$$PWD/$$(dirname $(location :Cargo.toml))\";"
+        # TODO(acmcarther): This needs to be revisited as part of the cross compilation story.
+        #                   See also: https://github.com/google/cargo-raze/pull/54
+        + " export TARGET='x86_64-apple-darwin';"
+        + " export RUST_BACKTRACE=1;"
+        + " export CARGO_FEATURE_STD=1;"
+        + " export OUT_DIR=$$PWD/$$(dirname $@)/log_out_dir_outputs;"
+        + " export BINARY_PATH=\"$$PWD/$(location :log_build_script)\";"
+        + " export OUT_TAR=$$PWD/$@;"
+        + " cd $$(dirname $(location :Cargo.toml)) && $$BINARY_PATH && tar -czf $$OUT_TAR -C $$OUT_DIR .)"
+)
+
 # Unsupported target "filters" with type "test" omitted
 
 rust_library(
@@ -37,7 +74,9 @@ rust_library(
     ],
     rustc_flags = [
         "--cap-lints=allow",
+        "--cfg=atomic_cas",
     ],
+    out_dir_tar = ":log_build_script_executor",
     version = "0.4.8",
     crate_features = [
         "std",
