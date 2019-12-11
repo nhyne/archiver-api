@@ -63,6 +63,12 @@ genrule(
         + " export OUT_DIR=$$PWD/$$(dirname $@)/ring_out_dir_outputs;"
         + " export BINARY_PATH=\"$$PWD/$(location :ring_build_script)\";"
         + " export OUT_TAR=$$PWD/$@;"
+        + " export CARGO_CFG_TARGET_ARCH=x86_64;"
+        + " export CARGO_CFG_TARGET_OS=macos;"
+        + " export CARGO_CFG_TARGET_ENV='';"
+        + " export DEBUG=false;"
+        + " export OPT_LEVEL=3;"
+        + " export HOST=x86_64-apple-darwin;"
         + " cd $$(dirname $(location :Cargo.toml)) && $$BINARY_PATH && tar -czf $$OUT_TAR -C $$OUT_DIR .)"
 )
 
@@ -86,8 +92,14 @@ rust_library(
     ],
     rustc_flags = [
         "--cap-lints=allow",
+        "--cfg 'feature=\"default\"'",
+        "--cfg 'feature=\"dev_urandom_fallback\"'",
+        "--cfg 'feature=\"use_heap\"'",
+        "-l static=ring-core",
+        "-L native=/tmp/ring_out_dir_outputs",
     ],
     out_dir_tar = ":ring_build_script_executor",
+    data = glob(["src/**"]),
     version = "0.13.5",
     crate_features = [
         "default",

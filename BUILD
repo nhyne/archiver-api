@@ -4,6 +4,7 @@ rust_binary(
     name = "archiver-api",
     srcs = glob(["src/**/*.rs", "src/*.rs"]),
     edition = "2018",
+    crate_root = "src/main.rs",
     deps = [
         "//cargo:chrono",
         "//cargo:diesel",
